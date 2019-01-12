@@ -8,3 +8,8 @@ const hero = {
         damage: 2
     }
 };
+
+function rest(currentHero) {
+    currentHero.health = 10;
+    return currentHero;
+};
