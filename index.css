@@ -2,7 +2,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-img {
+#image-container img {
     width: 12rem;
     height: 12rem;
     margin-left: auto;
@@ -44,8 +44,6 @@ input[type=text] {
     justify-content: center;
 }
 
-
-
 #test-button {
         position: absolute;
         top: 0;
@@ -57,7 +55,7 @@ li {
     margin-right: auto;
 }
 
-#stat-container, #enememes-container {
+#stat-container, #enemy-stat-container{
     width: 60%;
     margin-left: auto;
     margin-right: auto;
@@ -65,10 +63,26 @@ li {
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 4rem;
+    border: 1px solid black;
 }
 
 #enememes-container button {
     color: red;
     font-size: 1.3rem;
     padding: 1rem;
+}
+
+#enememes-container img {
+    width: 12rem;
+    height: 12rem;
+}
+
+#enememes-container {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 4rem;
 }

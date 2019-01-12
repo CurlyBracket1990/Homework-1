@@ -12,47 +12,47 @@ const hero = {
 
 //Creating enemies
 
-const enememes = {
-    koala: {
+const enememes = [
+    {
         name: "Koala",
         health: 5,
         weapon: {
             type: "claws",
             damage: 2
         },
-        image: "pages/meme1.jpg"
+        image: "images/meme1.png"
     },
 
-    crybaby: {
+    {
         name: "Crybaby",
         health: 1,
         weapon: {
             type: "tears",
             damage: 1
         },
-        image: "pages/meme2.jpg"
+        image: "images/meme2.png"
     },
 
-    Catknight: {
+    {
         name: "Catknight",
         health: 10,
         weapon: {
             type: "teeth",
             damage: 1
         },
-        image: "pages/meme3.jpg"
+        image: "images/meme3.png"
     },
 
-    Alpaca: {
+    {
         name: "Alpaca",
         health: 3,
         weapon: {
             type: "spit",
             damage: 1
         },
-        image: "pages/meme4.jpg"
+        image: "images/meme4.png"
     }
-};
+];
 
 //New weapon called dagger
 const dagger = {
@@ -107,10 +107,9 @@ function displayStats(currentHero) {
     for (i = 0; i<heroStats.length; i++) {
         const statLi = document.createElement("li")
         statLi.innerText = statNames[i] + ": " + heroStats[i];
-        statLi.id = statIds[i];
+        statLi.id = "hero-"+statIds[i];
         statsDiv.appendChild(statLi);
     }
-
 
 }
 
@@ -135,6 +134,7 @@ function enemyButton() {
     button.type = "submit";
     button.value = "Scout for enememes";
     button.innerText = "Scout for EneMEMES";
+    button.id = "enememe-button"
     button.setAttribute("onclick", "scoutForEnememes()");
     const div = document.createElement("div");
     div.id = "enememes-container";
@@ -143,6 +143,68 @@ function enemyButton() {
     div.appendChild(button);
 }
 
+//Remove name input field and create button to scout for enemies
 function scoutForEnememes() {
-    console.log("Hello");
+    document.getElementById("enememe-button").remove();
+    const container = document.getElementById("enememes-container");
+    const image = document.createElement("img");
+    container.appendChild(image);
+    const i = Math.floor((Math.random() * enememes.length));
+    currentEnemy = enememes[i];
+    image.alt = currentEnemy.name;
+    image.src = currentEnemy.image;
+    fightButton();
 }
+
+//Added function to create a button that fights current enemy
+function fightButton() {
+    const button = document.createElement("button")
+    button.type = "submit";
+    button.value = "Fight eneMEME";
+    button.innerText = "Fight eneMEME"
+    button.id = "fight-enememe-button";
+    button.setAttribute("onclick", "fightEnemy()");
+    const container = document.getElementById("enememes-container");
+    container.appendChild(button);
+    displayEnemyStats();
+}
+
+//Deal damage to and receive damage from enemy
+function fightEnemy() {
+    console.log(currentEnemy);
+    const heroHealth = hero.health;
+    const heroDamage = hero.weapon.damage;
+    const enemyDamage = currentEnemy.weapon.damage;
+    currentEnemy.health = currentEnemy.health - heroDamage;
+    updateEnemyHealth();
+}
+
+//Display stats of current enemy
+function displayEnemyStats() {
+    const enemyName = currentEnemy.name;
+    const enemyHealth = currentEnemy.health;
+    const enemyWeapon = currentEnemy.weapon.type;
+    const enemyDamage = currentEnemy.weapon.damage;
+
+    const enemyStatsDiv = document.createElement("div");
+    enemyStatsDiv.id = "enemy-stat-container";
+    const statContainer = document.getElementById("function-images");
+    statContainer.appendChild(enemyStatsDiv);
+
+    const enemyStats = [enemyName, enemyHealth, enemyWeapon, enemyDamage];
+    const enemeyStatnames = ["Enemy name", "Health", "Weapon type", "Weapon damage"];
+    const statIds = ["name", "health", "weapon-type", "weapon-damage"];
+
+    for (i = 0; i<enemyStats.length; i++) {
+        const statLi = document.createElement("li")
+        statLi.innerText = enemeyStatnames[i] + ": " + enemyStats[i];
+        statLi.id = "enemy-"+statIds[i];
+        enemyStatsDiv.appendChild(statLi);
+    }
+};
+
+//Update enemy stats
+function updateEnemyHealth() {
+    document.getElementById("enemy-health").innerText = "Health: "+currentEnemy.health;
+    document.getElementById("enemy-health").style.color = "red";
+};
