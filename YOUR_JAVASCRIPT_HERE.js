@@ -60,10 +60,10 @@ const dagger = {
     damage: 2
 };
 
-//Resting function that resets hero's hp
+//Resting function that heals hero's hp to 10
 function rest(currentHero) {
     currentHero.health = 10;
-    return currentHero;
+    return currentHero
 };
 
 //Function that makes the hero pick up the clicked item
@@ -82,11 +82,6 @@ function equipWeapon (currentHero) {
 };
 
 function displayStats(currentHero) {
-    //Fetching hero data and store them in variables
-    const name = currentHero.name;
-    const health = currentHero.health;
-    const weaponType = currentHero.weapon.type;
-    const weaponDamage = currentHero.weapon.damage;
 
     //Declaring variables to store new html elements in
     const statsDiv = document.createElement("div");
@@ -99,7 +94,7 @@ function displayStats(currentHero) {
     statContainer.appendChild(statsDiv);
 
     //Storing all stats and statnames in arrays
-    const heroStats = [name, health, weaponType, weaponDamage];
+    const heroStats = [currentHero.name, currentHero.health, currentHero.weapon.type, currentHero.weapon.damage];
     const statNames = ["Name", "Health", "Weapon type", "Weapon damage"];
     const statIds = ["name", "health", "weapon-type", "weapon-damage"];
 
@@ -118,7 +113,7 @@ function displayStats(currentHero) {
 //Name your hero and begin the game by displaying base stats
 function nameHero(){
     const name = document.getElementById("heroname").value;
-    if(name != hero.name){
+    if(name != ""){
     hero.name = name;
     displayStats(hero);
     document.getElementById("nameHero").remove();
@@ -128,14 +123,16 @@ function nameHero(){
     }
 }
 
-//A button gets added which allows the player to scout for enemies
+//Function that creates button to scout for enemies
 function enemyButton() {
     const button = document.createElement("button");
     button.type = "submit";
-    button.value = "Scout for enememes";
-    button.innerText = "Scout for EneMEMES";
+    button.value = "Scout for enememe";
+    button.innerText = "Scout for EneMEME";
     button.id = "enememe-button"
     button.setAttribute("onclick", "scoutForEnememes()");
+    const innImage = document.getElementById("inn");
+    innImage.setAttribute("onclick", "rest(hero), updatePlayerHealth()");
     const div = document.createElement("div");
     div.id = "enememes-container";
     const nameHeroDiv = document.getElementById("function-images");
@@ -143,11 +140,14 @@ function enemyButton() {
     div.appendChild(button);
 }
 
-//Remove name input field and create button to scout for enemies
+//Remove name input field and create button to fight current enemy
 function scoutForEnememes() {
     document.getElementById("enememe-button").remove();
-    const container = document.getElementById("enememes-container");
+    if(pChecker()){
+        document.getElementById("paragraph").remove();   
+    };
     const image = document.createElement("img");
+    container = document.getElementById("enememes-container");
     container.appendChild(image);
     const i = Math.floor((Math.random() * enememes.length));
     currentEnemy = enememes[i];
@@ -163,20 +163,25 @@ function fightButton() {
     button.value = "Fight eneMEME";
     button.innerText = "Fight eneMEME"
     button.id = "fight-enememe-button";
-    button.setAttribute("onclick", "fightEnemy()");
+    button.setAttribute("onclick", "fightEnemy(currentEnemy)");
     const container = document.getElementById("enememes-container");
     container.appendChild(button);
-    displayEnemyStats();
+    displayEnemyStats(currentEnemy);
 }
 
 //Deal damage to and receive damage from enemy
 function fightEnemy() {
-    console.log(currentEnemy);
-    const heroHealth = hero.health;
     const heroDamage = hero.weapon.damage;
-    const enemyDamage = currentEnemy.weapon.damage;
     currentEnemy.health = currentEnemy.health - heroDamage;
-    updateEnemyHealth();
+    if(currentEnemy.health>0){
+        hero.health = hero.health-currentEnemy.weapon.damage;
+        updateEnemyHealth()
+        updatePlayerHealth()
+    }else {
+        removeEnemy()
+        enemyButton()
+        displayVictory();
+    };
 }
 
 //Display stats of current enemy
@@ -208,3 +213,39 @@ function updateEnemyHealth() {
     document.getElementById("enemy-health").innerText = "Health: "+currentEnemy.health;
     document.getElementById("enemy-health").style.color = "red";
 };
+
+//Removes enemy (called after defeating)
+function removeEnemy(){
+    document.getElementById("enememes-container").remove();
+    document.getElementById("enemy-stat-container").remove();
+};
+
+//Update displayed player hp
+function updatePlayerHealth() {
+    document.getElementById("hero-health").innerText = "Health: "+hero.health;
+    if(hero.health<10){
+    document.getElementById("hero-health").style.color = "red";
+    } else if(hero.health > 10) {
+        document.getElementById("hero-health").style.color = "green"; 
+    } else {
+        document.getElementById("hero-health").style.color = "black";   
+    }
+};
+
+//Displays a victory message and exp gain (gets triggered when enemys hp reaches 0)
+function displayVictory(){
+    const paragraph = document.createElement("p");
+    paragraph.id = "paragraph";
+    const victoryMessage = "You've slain the enemy and gained 5 exp!";
+    paragraph.innerText = victoryMessage;
+    const container = document.getElementById("enememes-container");
+    container.appendChild(paragraph);
+}
+
+//Checks if victory paragraph is present (to delete it when you scout for new enemies)
+function pChecker() {
+    const paragraph = document.getElementById("paragraph");
+    if(typeof(paragraph) != 'undefined' && paragraph != null){
+        return true;
+    }
+  }
