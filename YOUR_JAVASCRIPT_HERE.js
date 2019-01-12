@@ -10,6 +10,50 @@ const hero = {
     }
 };
 
+//Creating enemies
+
+const enememes = {
+    koala: {
+        name: "Koala",
+        health: 5,
+        weapon: {
+            type: "claws",
+            damage: 2
+        },
+        image: "pages/meme1.jpg"
+    },
+
+    crybaby: {
+        name: "Crybaby",
+        health: 1,
+        weapon: {
+            type: "tears",
+            damage: 1
+        },
+        image: "pages/meme2.jpg"
+    },
+
+    Catknight: {
+        name: "Catknight",
+        health: 10,
+        weapon: {
+            type: "teeth",
+            damage: 1
+        },
+        image: "pages/meme3.jpg"
+    },
+
+    Alpaca: {
+        name: "Alpaca",
+        health: 3,
+        weapon: {
+            type: "spit",
+            damage: 1
+        },
+        image: "pages/meme4.jpg"
+    }
+};
+
 //New weapon called dagger
 const dagger = {
     type: "dagger",
@@ -70,14 +114,35 @@ function displayStats(currentHero) {
 
 }
 
+//A bit less comments from here on, because i'm feeling confident
 
+//Name your hero and begin the game by displaying base stats
 function nameHero(){
     const name = document.getElementById("heroname").value;
     if(name != hero.name){
     hero.name = name;
     displayStats(hero);
-    document.getElementById("changeHero").remove();
+    document.getElementById("nameHero").remove();
+    enemyButton();
     } else {
         alert("Please pick a name");
     }
+}
+
+//A button gets added which allows the player to scout for enemies
+function enemyButton() {
+    const button = document.createElement("button");
+    button.type = "submit";
+    button.value = "Scout for enememes";
+    button.innerText = "Scout for EneMEMES";
+    button.setAttribute("onclick", "scoutForEnememes()");
+    const div = document.createElement("div");
+    div.id = "enememes-container";
+    const nameHeroDiv = document.getElementById("function-images");
+    nameHeroDiv.appendChild(div);
+    div.appendChild(button);
+}
+
+function scoutForEnememes() {
+    console.log("Hello");
 }
