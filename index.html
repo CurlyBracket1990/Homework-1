@@ -3,18 +3,35 @@
     <meta charset="utf-8">
     <title>Mocha Tests</title>
     <link href="https://unpkg.com/mocha@4.0.1/mocha.css" rel="stylesheet" />
+    <link href="index.css" rel="stylesheet" />
 </head>
 <body>
 
 
   <!-- YOUR HTML HERE -->
 
-  <img id="inn" onclick="rest(hero)" />
-  <img id="dagger" onclick="pickUpItem(hero, dagger)" />
-  <img id="bag" onclick="equipWeapon(hero)" />
+<main>
+  <section id="function-images">
+    <div id="image-container">
+      <img id="inn" src="images/inn.png" alt="inn" onclick="rest(hero);" />
+      <img id="dagger" src="images/dagger.png" alt="dagger" onclick="pickUpItem(hero, dagger);" />
+      <img id="bag" src="images/bag.png" alt="bag" onclick="equipWeapon(hero);" />
+    </div>
+  </section>
+  <section id = "changeHero">
+    <div id="form container">
+        <form onsubmit="nameHero(); return false;">
+          Name your hero:<br>
+          <input type="text" id="heroname" value="">
+          <br><br>
+          <input type="submit" value="Change name">
+        </form> 
+    </div>
+  </section>
+</main>
 
   <!-- I RECOMMEND YOU LEAVE THE REST UNTOUCHED -->
-  <button onclick="mocha.checkLeaks(); mocha.run();">Run the tests!</button>
+  <button onclick="mocha.checkLeaks(); mocha.run();" id="test-button">Run the tests!</button>
   <div id="mocha"></div>
 
   <script src="https://unpkg.com/chai@4.1.2/chai.js"></script>

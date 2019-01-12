@@ -36,3 +36,40 @@ function equipWeapon (currentHero) {
     }
     return currentHero;
 };
+
+function displayStats(currentHero) {
+    //Fetching hero data and store them in variables
+    const name = currentHero.name;
+    const health = currentHero.health;
+    const weaponType = currentHero.weapon.type;
+    const weaponDamage = currentHero.weapon.damage;
+
+    //Declaring variables to store new html elements in
+    const statsDiv = document.createElement("div");
+    statsDiv.id = "stat-container";
+
+    //Storing existing div element to store new stat div in
+    const statContainer = document.getElementById("function-images");
+
+    //Append some childs
+    statContainer.appendChild(statsDiv);
+
+    //Storing all stats and statnames in arrays
+    const heroStats = [name, health, weaponType, weaponDamage];
+    const statNames = ["Name", "Health", "Weapon type", "Weapon damage"];
+
+    //Make a list item for every stat in the array
+    for (i = 0; i<heroStats.length; i++) {
+        const statLi = document.createElement("li")
+        statLi.innerText = statNames[i] + ": " + heroStats[i];
+        statsDiv.appendChild(statLi);
+    }
+
+
+}
+
+function nameHero(){
+    const newName = document.getElementById("heroname").value;
+    hero.name = newName;
+    displayStats(hero);
+}
