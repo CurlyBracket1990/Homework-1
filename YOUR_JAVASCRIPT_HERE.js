@@ -1,6 +1,6 @@
 //Hero object with basic keys and values
 const hero = {
-    name: "HenkyTanky",
+    name: "",
     heroic: true,
     inventory: [],
     health: 10,
@@ -57,19 +57,27 @@ function displayStats(currentHero) {
     //Storing all stats and statnames in arrays
     const heroStats = [name, health, weaponType, weaponDamage];
     const statNames = ["Name", "Health", "Weapon type", "Weapon damage"];
+    const statIds = ["name", "health", "weapon-type", "weapon-damage"];
 
     //Make a list item for every stat in the array
     for (i = 0; i<heroStats.length; i++) {
         const statLi = document.createElement("li")
         statLi.innerText = statNames[i] + ": " + heroStats[i];
+        statLi.id = statIds[i];
         statsDiv.appendChild(statLi);
     }
 
 
 }
 
+
 function nameHero(){
-    const newName = document.getElementById("heroname").value;
-    hero.name = newName;
+    const name = document.getElementById("heroname").value;
+    if(name != hero.name){
+    hero.name = name;
     displayStats(hero);
+    document.getElementById("changeHero").remove();
+    } else {
+        alert("Please pick a name");
+    }
 }
