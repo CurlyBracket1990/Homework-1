@@ -1,3 +1,10 @@
+# This is my result for the first weeks assignment for the codaisseur academy.
+
+The goal was to make a basic singleplayer rpg game with plain JS, html and CSS.
+
+Although this was the first assignment and i still had little knowledge it was by far the most fun assignment to do.
+
+
 # Beginner Bootcamp Homework
 
 Hello beginner bootcampers. Here is your first formal homework  assignment!
